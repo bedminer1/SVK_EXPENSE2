@@ -1,10 +1,18 @@
 import { fail, redirect } from "@sveltejs/kit";
 import type { ClientResponseError } from "pocketbase";
+import { env } from "$env/dynamic/private";
 
-export const load = async ({ locals }) => {
+export const load = async ({ locals, url }) => {
   // if user is logged in, redirect to dashboard
   if (locals.pb.authStore.model) return redirect(303, "/dashboard");
-  return {};
+
+  const authMethods = await locals.pb.collection("users").listAuthMethods();
+  const fail = url.searchParams.get("fail") === "true";
+
+  return {
+    providers: authMethods.authProviders,
+    fail: fail,
+  };
 };
 
 export const actions = {
@@ -86,5 +94,19 @@ export const actions = {
 
     // if successful, keep user on same page
     throw redirect(303, "/login");
+  },
+
+  google: async ({ locals, request, cookies }) => {
+    const provider = (
+      await locals.pb.collection("users").listAuthMethods()
+    ).authProviders.find((p: any): void => {
+      p.name === "google";
+      cookies.set("provider", JSON.stringify(provider), {
+        httpOnly: true,
+        path: `/auth/callback/google`,
+      });
+    });
+
+    throw redirect(303, provider?.authUrl + env.REDIRECT_URL + provider?.name);
   },
 };

@@ -26,13 +26,13 @@ export const authentication: Handle = async ({ event, resolve }) => {
   // send back pb_auth cookie to client with latest store this.state.
   response.headers.append(
     "set-cookie",
-    event.locals.pb.authStore.exportToCookie()
+    event.locals.pb.authStore.exportToCookie({ sameSite: "Lax" })
   );
 
   return response;
 };
 
-const unprotectedPrefix = ["/login"];
+const unprotectedPrefix = ["/login", '/register', "/auth"];
 export const authorization: Handle = async ({ event, resolve }) => {
   // protect routes under /authenticated
   if (
