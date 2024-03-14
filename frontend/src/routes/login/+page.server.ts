@@ -99,14 +99,13 @@ export const actions = {
   google: async ({ locals, request, cookies }) => {
     const provider = (
       await locals.pb.collection("users").listAuthMethods()
-    ).authProviders.find((p: any): void => {
-      p.name === "google";
+    ).authProviders.find((p: any) => p.name === "google");
       cookies.set("provider", JSON.stringify(provider), {
         httpOnly: true,
         path: `/auth/callback/google`,
       });
-    });
+      throw redirect(303, provider?.authUrl + env.REDIRECT_URL + provider?.name);
+    },
 
-    throw redirect(303, provider?.authUrl + env.REDIRECT_URL + provider?.name);
-  },
+
 };
