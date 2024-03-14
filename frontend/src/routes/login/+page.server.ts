@@ -107,5 +107,8 @@ export const actions = {
       throw redirect(303, provider?.authUrl + env.REDIRECT_URL + provider?.name);
     },
 
-
+    logout: async ({ locals }) => {
+        await locals.pb.authStore.clear()
+        throw redirect(303, '/login')
+    }
 };
