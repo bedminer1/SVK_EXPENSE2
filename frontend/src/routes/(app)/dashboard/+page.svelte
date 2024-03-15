@@ -49,11 +49,11 @@
 
 <div class="grid grid-cols-5 h-[90vh] max-h-full">
 	<div class="col-span-2"></div>
-	<div class="col-span-3 border-l border-surface-900-50-token p-6 flex flex-col gap-8 h-full">
+	<div class="col-span-3 border-l border-surface-900-50-token p-6 flex flex-col gap-8 h-full items-center">
 		<ul class="list w-full p-2 overflow-y-auto flex-[1_1_0]">
 			{#each data.expenses as expense}
 				<li class="flex">
-					<div class="flex-1 flex items-center p-4 card card-hover gap-4 rounded-token">
+					<div class="flex-1 flex items-center p-4 card card-hover gap-4 rounded-md my-1">
                         <span
                             ><img src={expense.expand?.category.icon} alt="category icon" class="w-8 h-8" /></span
                         >
@@ -91,13 +91,13 @@
 			{/each}
 		</ul>
 
-		<div class="flex gap-8 w-full">
+		<div class="flex gap-8 w-1/2">
             {#if !editExpenses}
-			<button class="btn variant-filled flex-1" on:click={() => modalStore.trigger(addExpenseModal)}>
+			<button class="btn variant-filled flex-1 rounded-md" on:click={() => modalStore.trigger(addExpenseModal)}>
                 Add expense
             </button>
             {/if}
-			<button class="btn variant-filled flex-1" on:click={() => editExpenses = !editExpenses}>{!editExpenses ? "Edit expenses" : "Cancel"}</button>
+			<button class="btn variant-filled flex-1 rounded-md" on:click={() => editExpenses = !editExpenses}>{!editExpenses ? "Edit expenses" : "Cancel"}</button>
 		</div>
 	</div>
 </div>

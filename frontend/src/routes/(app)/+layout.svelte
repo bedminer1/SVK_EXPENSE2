@@ -10,12 +10,14 @@
 <AppShell>
     <svelte:fragment slot="header">
 		<AppBar slotTrail="relative">
-            <svelte:fragment slot="lead">💵</svelte:fragment>
+            <svelte:fragment slot="lead">
+                <img class="mx-4 size-12" src="stonks.png" alt="logo">
+            </svelte:fragment>
             <svelte:fragment slot="trail">
-                <button on:click={() => profileMenuVisible = true}>
+                <button on:click={() => profileMenuVisible = !profileMenuVisible}>
                     <span class="sr-only">Your profile</span>
                     <img
-                        class="h-8 w-8 rounded-full bg-white"
+                        class="size-12 mx-4 rounded-full bg-white"
                         src="{'https://ui-avatars.com/api/?name=' + data.user.email}"
                         alt=""
                     />
