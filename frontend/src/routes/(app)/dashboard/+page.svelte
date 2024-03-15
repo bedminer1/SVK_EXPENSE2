@@ -47,7 +47,7 @@
     let editExpenses: boolean = false
 </script>
 
-<div class="grid grid-cols-5 h-screen max-h-full">
+<div class="grid grid-cols-5 h-[90vh] max-h-full">
 	<div class="col-span-2"></div>
 	<div class="col-span-3 border-l border-surface-900-50-token p-6 flex flex-col gap-8 h-full">
 		<ul class="list w-full p-2 overflow-y-auto flex-[1_1_0]">

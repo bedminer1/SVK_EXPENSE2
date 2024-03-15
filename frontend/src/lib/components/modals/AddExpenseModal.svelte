@@ -11,13 +11,13 @@
         id: $modalStore[0].meta.id ?? '',
         user: $modalStore[0].meta.user ?? '',
         label: $modalStore[0].meta.label ?? '',
-        amount: $modalStore[0].meta.amount ?? 0,
+        expense: $modalStore[0].meta.expense ?? 0,
     }
 
     const toastStore = getToastStore()
     const successToast = (create: unknown) => ({
         message: `The expense was ${create ? 'created'  : 'updated'} successfully.`,
-        background: 'variant=filled-success',
+        background: 'variant-filled-success',
     } satisfies ToastSettings)
     const failureToast = {
         message: 'Something went wrong. Please try again.',
@@ -52,7 +52,7 @@
 			</label>
 			<label class="label">
 				<span>Amount:</span>
-				<input class="input" name="amount" type="number" bind:value={formData.amount} placeholder="Enter amount..." required />
+				<input class="input" name="expense" type="number" bind:value={formData.expense} placeholder="Enter amount..." required />
 			</label>
 			<label class="label">
 				<span>Category:</span>
