@@ -8,7 +8,7 @@
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "typegen": "pocketbase-typegen --out ./src/lib/types/pocketbase.d.ts --db ../backend/pb_data/data.db"
+    "typegen": "pocketbase-typegen --out ./src/lib/types/pocketbase.d.ts"
   },
   "devDependencies": {
     "@skeletonlabs/skeleton": "2.9.0",
