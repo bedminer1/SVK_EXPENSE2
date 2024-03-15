@@ -58,6 +58,7 @@
                             ><img src={expense.expand?.category.icon} alt="category icon" class="w-8 h-8" /></span
                         >
                         <span class="flex-auto">{expense.label}</span>
+                        <span class="flex-auto">{expense.date}</span>
                         <span
                             class={expense.expense && expense.expense >= 0 ? 'text-success-500' : 'text-error-500'}
                             >{expense.expense} {expense.currency}</span

@@ -27,6 +27,7 @@ create: async ({ locals, request }) => {
     const data = await request.formData();
     data.append("currency", "SGD")
 
+
     const hasLabel = data.has('label');
     const hasAmount = data.has('expense');
     const hasCategory = data.has('category');

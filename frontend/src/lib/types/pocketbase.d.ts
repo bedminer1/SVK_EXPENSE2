@@ -48,6 +48,7 @@ export type ExpensesRecord = {
 	currency?: ExpensesCurrencyOptions
 	expense?: number
 	label?: string
+    date?: string
 }
 
 export type UsersRecord = {

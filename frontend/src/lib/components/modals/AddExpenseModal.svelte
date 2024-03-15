@@ -6,6 +6,11 @@
     export let parent: SvelteComponent
     const modalStore = getModalStore()
 
+    const date = new Date()
+	const defaultDate = date.toLocaleString('en-US',{hour12:false}).split(",")
+	const day = defaultDate[0].split('/')
+	const formattedDate = day[2] + '-' + day[1] + '-' + day[0]
+
     const categories = $modalStore[0].meta.categories ?? []
     const formData = {
         id: $modalStore[0].meta.id ?? '',
@@ -64,6 +69,7 @@
 					{/if}
 				</select>
 			</label>
+            <input class="hidden" id="date" name="date" type="text" value={formattedDate}/>
 			<footer class="modal-footer {parent.regionFooter}">
 				<button class="btn {parent.buttonNeutral}" type="button" on:click={parent.onClose}>{parent.buttonTextCancel}</button>
 				<button class="btn {parent.buttonPositive}" type="submit">Submit</button>
