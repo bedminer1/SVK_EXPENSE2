@@ -45,13 +45,50 @@
     }
 
     let editExpenses: boolean = false
+
+    // monthlySum
+	$: foodSum = data?.expenses.filter(record => parseInt(record.date.split('-')[2]) === currMonth).filter(record => record.expand?.category.name === 'food').reduce((accm, curr) => {
+		return accm + curr.expense
+	}, 0)
+	$: shopeeSum = data?.expenses.filter(record => parseInt(record.date.split('-')[2]) === currMonth).filter(record => record.expand?.category.name === 'shopee').reduce((accm, curr) => {
+		return accm + curr.expense
+	}, 0)
+	$: groceriesSum = data?.expenses.filter(record => parseInt(record.date.split('-')[2]) === currMonth).filter(record => record.expand?.category.name === 'groceries').reduce((accm, curr) => {
+		return accm + curr.expense
+	}, 0)
+	$: gymSum = data?.expenses.filter(record => parseInt(record.date.split('-')[2]) === currMonth).filter(record => record.expand?.category.name === 'gym').reduce((accm, curr) => {
+		return accm + curr.expense
+	}, 0)
+    $: transportSum = data?.expenses.filter(record => parseInt(record.date.split('-')[2]) === currMonth).filter(record => record.expand?.category.name === 'transport').reduce((accm, curr) => {
+		return accm + curr.expense
+	}, 0)
+    $: miscSum = data?.expenses.filter(record => parseInt(record.date.split('-')[2]) === currMonth).filter(record => record.expand?.category.name === 'miscSum').reduce((accm, curr) => {
+		return accm + curr.expense
+	}, 0)
+
+	$: monthlySum = gymSum + groceriesSum + shopeeSum + foodSum + transportSum + miscSum
+
+	// default month to current month, month picker
+	const currDate = new Date()
+	let monthPicked: string = (currDate.getMonth() + 1).toString()
+	$: currMonth = parseInt(monthPicked) ?? currDate.getMonth() + 1
 </script>
 
 <div class="grid grid-cols-5 h-[90vh] max-h-full">
-	<div class="col-span-2"></div>
-	<div class="col-span-3 border-l border-surface-900-50-token p-6 flex flex-col gap-8 h-full items-center">
+	<div class="col-span-2 flex justify-center">
+        <div class="p-3 text-center mb-4 w-2/3 whitespace-pre">
+			<h2 class="h2 text-center">RECEIPT</h2>
+			<h3 class="h3">food:          ${foodSum.toFixed(2)}</h3>
+			<h3 class="h3">shopee:     ${shopeeSum.toFixed(2)}</h3>
+			<h3 class="h3">groceries: ${groceriesSum.toFixed(2)}</h3>
+			<h3 class="h3">gym:          ${gymSum.toFixed(2)}</h3>
+			<h3 class="h3">total:         ${monthlySum.toFixed(2)}</h3>
+		</div>
+    </div>
+	<div class="col-span-3 border-l border-surface-900-50-token p-6 flex flex-col gap-8 h-full">
 		<ul class="list w-full p-2 overflow-y-auto flex-[1_1_0]">
 			{#each data.expenses as expense}
+            {#if parseInt(expense.date.split('-')[2]) === currMonth} 
 				<li class="flex">
 					<div class="flex-1 flex items-center p-4 card card-hover gap-4 rounded-md my-1">
                         <span
@@ -61,8 +98,8 @@
                         <span class="flex-auto">{expense.date}</span>
                         <span
                             class={expense.expense && expense.expense >= 0 ? 'text-success-500' : 'text-error-500'}
-                            >{expense.expense} {expense.currency}</span
-                        >
+                            >${expense.expense.toFixed(2)}
+                            </span>
                     </div>
                     {#if editExpenses}
                     <button type="button" class="btn-icon variant-filled-primary" on:click={() => modalStore.trigger(updateExpenseModal(expense.id, expense.label, expense.expense))}>
@@ -89,16 +126,31 @@
                     </form>
                     {/if}
 				</li>
+            {/if}
 			{/each}
 		</ul>
 
 		<div class="flex gap-8 w-1/2">
             {#if !editExpenses}
-			<button class="btn variant-filled flex-1 rounded-md" on:click={() => modalStore.trigger(addExpenseModal)}>
+			<button class="btn variant-filled rounded-md ml-16" on:click={() => modalStore.trigger(addExpenseModal)}>
                 Add expense
             </button>
             {/if}
-			<button class="btn variant-filled flex-1 rounded-md" on:click={() => editExpenses = !editExpenses}>{!editExpenses ? "Edit expenses" : "Cancel"}</button>
+			<button class="btn variant-filled rounded-md" on:click={() => editExpenses = !editExpenses}>{!editExpenses ? "Edit expenses" : "Cancel"}</button>
+            <select class="select h-10 w-20" name="month" id="month" bind:value={monthPicked}>
+                <option value="1">jan</option>
+                <option value="2">feb</option>
+                <option value="3">mar</option>
+                <option value="4">apr</option>
+                <option value="5">may</option>
+                <option value="6">jun</option>
+                <option value="7">jul</option>
+                <option value="8">aug</option>
+                <option value="9">sep</option>
+                <option value="10">oct</option>
+                <option value="11">nov</option>
+                <option value="12">dec</option>
+            </select>
 		</div>
 	</div>
 </div>
