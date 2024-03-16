@@ -4,7 +4,7 @@
 
 </script>
 
-<div class="h-full flex flex-col justify-center sm:mx-auto sm:w-full sm:max-w-sm">
+<div class="h-[90vh] flex flex-col justify-center sm:mx-auto sm:w-full sm:max-w-sm">
     <!-- if form fail, display error message -->
     {#if form?.fail || data?.fail}
         <div class="variant-soft-error px-4 py-2 mb-2 rounded-token">
