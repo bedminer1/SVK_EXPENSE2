@@ -64,7 +64,7 @@ export const actions = {
 
     try {
       await locals.pb
-        .collection("user")
+        .collection("users")
         .authWithPassword(email.toString(), password.toString());
     } catch (error) {
       const errorObj = error as ClientResponseError;
