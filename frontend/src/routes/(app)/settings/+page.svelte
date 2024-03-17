@@ -11,7 +11,7 @@
     $: changes = avatarFiles?.length > 0 || email !== data.user.email || oldPassword && password
 </script>
 
-<form class="h-full w-full" method="post" enctype="multipart/form-data" >
+<form class="h-full w-full" method="POST" enctype="multipart/form-data" >
     <div>
         <label for="avator" class="label">
             <span>Avatar:</span>
@@ -24,11 +24,11 @@
         </label>
         <label class="label">
             <span>Old password: </span>
-            <input type="password" class="input" placeholder="*****" bind:value={oldPassword}>
+            <input type="password" class="input" name="oldPassword" placeholder="*****" bind:value={oldPassword}>
         </label>
         <label class="label">
             <span>Password: </span>
-            <input type="password" class="input" placeholder="*****" bind:value={password}>
+            <input type="password" class="input" name="password" placeholder="*****" bind:value={password}>
             <input type="hidden" name="passwordConfirm" class="input" placeholder="*****" bind:value={password} />
         </label>
     </div>

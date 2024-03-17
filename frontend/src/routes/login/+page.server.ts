@@ -74,41 +74,19 @@ export const actions = {
     throw redirect(303, "/dashboard");
   },
 
-  reset: async ({ locals, request }) => {
-    const data = await request.formData();
-    const email = data.get("email");
-
-    // check if email valid
-    if (!email) {
-      return fail(400, { emailRequired: email === null });
-    }
-
-    try {
-      await locals.pb
-        .collection("users")
-        .requestPasswordReset(email.toString());
-    } catch (error) {
-      const errorObj = error as ClientResponseError;
-      return fail(500, { fail: true, message: errorObj.data.message });
-    }
-
-    // if successful, keep user on same page
-    throw redirect(303, "/login");
-  },
-
   google: async ({ locals, request, cookies }) => {
     const provider = (
       await locals.pb.collection("users").listAuthMethods()
     ).authProviders.find((p: any) => p.name === "google");
-      cookies.set("provider", JSON.stringify(provider), {
-        httpOnly: true,
-        path: `/auth/callback/google`,
-      });
-      throw redirect(303, provider?.authUrl + env.REDIRECT_URL + provider?.name);
-    },
+    cookies.set("provider", JSON.stringify(provider), {
+      httpOnly: true,
+      path: `/auth/callback/google`,
+    });
+    throw redirect(303, provider?.authUrl + env.REDIRECT_URL + provider?.name);
+  },
 
-    logout: async ({ locals }) => {
-        await locals.pb.authStore.clear()
-        throw redirect(303, '/login')
-    }
+  logout: async ({ locals }) => {
+    await locals.pb.authStore.clear();
+    throw redirect(303, "/login");
+  },
 };

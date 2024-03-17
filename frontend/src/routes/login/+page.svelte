@@ -20,16 +20,19 @@
             <span>Password</span>
             <input class="input" name="password" title="Password" type="password" placeholder="******" required />
         </label>
-        <button class="block ml-auto hover:underline my-2" formnovalidate formaction="?/reset">Reset Password</button>
-        <button class="btn variant-filled w-full mt-4" type="submit">Login</button>
-        <button class="btn variant-filled w-full mt-4 mb-2" formaction="?/register">Register</button>
+        <div class="flex w-full justify-center gap-4 h-16">
+            <button class="btn variant-filled w-1/4 mt-4 mb-3 rounded-md" type="submit">Login</button>
+            <button class="btn variant-filled w-1/4 mt-4 mb-3 rounded-md" formaction="?/register">Register</button>
+        </div>
     </form>
     <hr />
     <form method="post">
-        {#each data.providers as provider}
-        <button class="btn variant-filled w-full mt-2" formaction="?/{provider.name}">
-            {provider.displayName}
-        </button>
-        {/each}
+        <div class="flex w-full justify-center gap-4 h-16">
+            {#each data.providers as provider}
+            <button class="btn variant-filled w-1/4 mt-4 mb-3 rounded-md" formaction="?/{provider.name}">
+                {provider.displayName}
+            </button>
+            {/each}
+        </div>
     </form>
 </div>
