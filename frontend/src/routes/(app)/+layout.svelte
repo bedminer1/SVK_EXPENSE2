@@ -18,7 +18,9 @@
     <svelte:fragment slot="header">
 		<AppBar slotTrail="relative">
             <svelte:fragment slot="lead">
-                <img class="mx-4 size-12" src="stonks.png" alt="logo">
+                <a href="/dashboard">               
+                    <img class="mx-4 size-12" src="stonks.png" alt="logo">
+                </a>
             </svelte:fragment>
             <svelte:fragment slot="trail">
                 <button use:popup={popupClick}>

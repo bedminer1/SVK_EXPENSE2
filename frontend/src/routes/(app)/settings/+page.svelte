@@ -11,7 +11,7 @@
     $: changes = avatarFiles?.length > 0 || email !== data.user.email || oldPassword && password
 </script>
 
-<form class="h-full w-full" method="POST" enctype="multipart/form-data" >
+<form class="h-[80vh] w-full items-center flex justify-center" method="POST" enctype="multipart/form-data" >
     <div>
         <label for="avator" class="label">
             <span>Avatar:</span>
