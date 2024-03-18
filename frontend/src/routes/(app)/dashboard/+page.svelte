@@ -113,6 +113,10 @@
             }
         }, { expand: 'category' })
     })
+
+    onDestroy(() => {
+        pb?.authStore?.clear()
+    })
 </script>
 
 <div class="grid grid-cols-5 h-[90vh] max-h-full">
