@@ -26,7 +26,7 @@ export const authentication: Handle = async ({ event, resolve }) => {
   // send back pb_auth cookie to client with latest store this.state.
   response.headers.append(
     "set-cookie",
-    event.locals.pb.authStore.exportToCookie({ sameSite: "Lax" })
+    event.locals.pb.authStore.exportToCookie({ sameSite: "Lax", httpOnly: false })
   );
 
   return response;

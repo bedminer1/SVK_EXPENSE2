@@ -1,6 +1,10 @@
 <script lang="ts">
     import { getModalStore, getToastStore, type ModalSettings, type ToastSettings } from '@skeletonlabs/skeleton'
     import { enhance } from '$app/forms'
+    import PocketBase from 'pocketbase'
+    import { env } from '$env/dynamic/public'
+    import { onMount, onDestroy } from 'svelte'
+    import type { CategoriesResponse, ExpensesResponse } from '$lib/types/pocketbase'
 
     export let data
     const modalStore = getModalStore()
@@ -72,6 +76,43 @@
 	const currDate = new Date()
 	let monthPicked: string = (currDate.getMonth() + 1).toString()
 	$: currMonth = parseInt(monthPicked) ?? currDate.getMonth() + 1
+
+    let pb: PocketBase
+    onMount(async () => {
+        pb = new PocketBase(env.PUBLIC_PB_URL)
+        pb.authStore?.loadFromCookie(document.cookie || '')
+
+        pb.collection('expenses2').subscribe<ExpensesResponse<{ category: CategoriesResponse}>>('*', function (e) {
+            switch (e.action) {
+                case 'create':
+                    let icon = e.record.expand?.category?.icon
+                    if (icon) {
+                        const url = pb.files.getUrl(e.record.expand?.category!, icon, {'thumbs': '100x100'})
+                        e.record.expand!.category!.icon = url
+                    }
+                    data.expenses = [...data.expenses, e.record]
+                    break
+
+                case 'update':
+                    data.expenses = data.expenses.map((expense) => {
+                        if (expense.id === e.record.id) {
+                            let icon = e.record.expand?.category?.icon
+                            if (icon) {
+                                const url = pb.files.getUrl(e.record.expand?.category!, icon, {'thumb': '100x100'})
+                                e.record.expand!.category!.icon = url
+                            }
+
+                            return e.record
+                        }
+                        return expense
+                    })
+                    break
+                case 'delete':
+                    data.expenses = data.expenses.filter((expense) => expense.id !== e.record.id)
+                    break
+            }
+        }, { expand: 'category' })
+    })
 </script>
 
 <div class="grid grid-cols-5 h-[90vh] max-h-full">
