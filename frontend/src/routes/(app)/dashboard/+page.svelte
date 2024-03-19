@@ -5,6 +5,7 @@
     import { env } from '$env/dynamic/public'
     import { onMount, onDestroy } from 'svelte'
     import type { CategoriesResponse, ExpensesResponse } from '$lib/types/pocketbase'
+    import type { ChartData } from 'chart.js';
 
     export let data
     const modalStore = getModalStore()
@@ -116,6 +117,12 @@
 
     onDestroy(() => {
         pb?.authStore?.clear()
+    })
+
+    $: formattedExpenses = ((): ChartData<'pie', number[], unknown> => {
+        //  labels
+        let labels = [...(new Set(data.expenses.map((expense) => expense.expand ? expense.expand.category.name : 'Other')))]
+        labels = labels.map((label) => label.charAt(0).toUpperCase() + label.slice(1))
     })
 </script>
 

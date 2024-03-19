@@ -33,7 +33,9 @@
   "type": "module",
   "dependencies": {
     "@floating-ui/dom": "1.6.3",
+    "chart.js": "^4.4.2",
     "highlight.js": "11.9.0",
-    "pocketbase": "^0.21.1"
+    "pocketbase": "^0.21.1",
+    "svelte-chartjs": "^3.1.5"
   }
 }
