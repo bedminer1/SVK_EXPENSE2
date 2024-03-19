@@ -123,6 +123,31 @@
         //  labels
         let labels = [...(new Set(data.expenses.map((expense) => expense.expand ? expense.expand.category.name : 'Other')))]
         labels = labels.map((label) => label.charAt(0).toUpperCase() + label.slice(1))
+
+        // data to label
+        let dataToLabel = new Array(labels.length).fill(0)
+        data.expenses.forEach((expense) => {
+            let label = expense.expand ? expense.expand.category.name : 'Other'
+            let index = labels.indexOf(label.charAt(0).toUpperCase() + label.slice(1))
+            dataToLabel[index] += expense.expense
+        })
+
+        // color to label
+        let backgroundColor = new Array(labels.length).fill('')
+        dataToLabel.forEach((_, index) => {
+            backgroundColor[index] = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`
+        })
+
+        return {
+            labels,
+            datasets: [
+                {
+                    label: 'Expenses',
+                    data: dataToLabel,
+                    backgroundColor
+                }
+            ]
+        }
     })
 </script>
 
