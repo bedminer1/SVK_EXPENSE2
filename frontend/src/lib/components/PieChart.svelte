@@ -15,3 +15,5 @@
 
     export let data: ChartData<'pie', number[], unknown>
 </script>
+
+<Pie {data} options={{borderColor: '#363f5d', color: 'white'}} />

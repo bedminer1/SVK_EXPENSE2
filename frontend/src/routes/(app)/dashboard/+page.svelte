@@ -6,6 +6,7 @@
     import { onMount, onDestroy } from 'svelte'
     import type { CategoriesResponse, ExpensesResponse } from '$lib/types/pocketbase'
     import type { ChartData } from 'chart.js';
+    import PieChart from '$lib/components/PieChart.svelte';
 
     export let data
     const modalStore = getModalStore()
@@ -148,11 +149,11 @@
                 }
             ]
         }
-    })
+    })()
 </script>
 
 <div class="grid grid-cols-5 h-[90vh] max-h-full">
-	<div class="col-span-2 flex justify-center">
+	<div class="col-span-2 flex flex-col items-center justify-center">
         <div class="p-3 text-center mb-4 w-2/3 whitespace-pre">
 			<h2 class="h2 text-center">RECEIPT</h2>
 			<h3 class="h3">food:          ${foodSum.toFixed(2)}</h3>
@@ -161,6 +162,9 @@
 			<h3 class="h3">gym:          ${gymSum.toFixed(2)}</h3>
 			<h3 class="h3">total:         ${monthlySum.toFixed(2)}</h3>
 		</div>
+        <div class="w-full h-full p-16">
+            <PieChart data={formattedExpenses} />
+        </div>
     </div>
 	<div class="col-span-3 border-l border-surface-900-50-token p-6 flex flex-col gap-8 h-full">
 		<ul class="list w-full p-2 overflow-y-auto flex-[1_1_0]">
